@@ -13,6 +13,8 @@ exports.createUser = function (req, res, next) {
         return;
     }
 
+    userData.completeName = userData.surname + userData.lastname;
+
     usersDB.saveUser(userData)
         .then(user => {
             res.send(user)

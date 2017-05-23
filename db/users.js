@@ -29,7 +29,7 @@ exports.saveUser = function(userData) {
             })
             .catch(err => {
                 console.log("Error saving user: " + err);
-                reject(user);
+                reject(err);
             })
     })
 }
