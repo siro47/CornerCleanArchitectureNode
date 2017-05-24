@@ -18,6 +18,22 @@ describe('GroupTests', function() {
                 assert(group.users.length == 1);
                 done();
             })
+            .catch(err => {
+                console.log(err);
+            })
+    });
+
+    it('Retrieve existing group', function(done) {
+        groupsDomain.getGroup('5925676cc51a201ea7767ada')
+            .then(group => {
+                assert(group != null);
+                assert(group.name != null);
+                assert(group.description != null);
+                done();
+            })
+            .catch(err => {
+                console.log(err);
+            })
     });
 
 });

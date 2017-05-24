@@ -3,6 +3,31 @@
  */
 var usersDomain = require('./users');
 var groupsDB = require('../db/groups');
+var usersDB = require('../db/users');
+
+exports.getGroup = function (groupId) {
+    return new Promise(function(resolve, reject) {
+        groupsDB.getGroup(groupId)
+            .then(group => {
+                resolve(group);
+            })
+            .catch(err => {
+                reject(err);
+            })
+    });
+}
+
+exports.getUsers = function (group) {
+    return new Promise(function(resolve, reject) {
+        usersDB.getUsersByIds(group.users)
+            .then(users => {
+                resolve(users);
+            })
+            .catch(err => {
+                reject(err);
+            })
+    });
+}
 
 exports.createGroup = function (groupData) {
     return new Promise(function(resolve, reject) {

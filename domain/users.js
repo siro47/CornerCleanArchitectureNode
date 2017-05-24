@@ -11,8 +11,8 @@ exports.createUser = function(userData) {
             reject('Missing fields');
             return;
         }
-
-        userData.completeName = userData.surname + userData.lastname;
+        
+        userData.completename = userData.surname + userData.lastname;
 
         usersDB.saveUser(userData)
             .then(user => {

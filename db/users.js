@@ -12,6 +12,7 @@ var db = db_tools.DBConnectMongoose();
 var UserSchema = new mongoose.Schema({
     surname: String,
     lastname: String,
+    completename: String,
     dni: String
 });
 
@@ -29,6 +30,18 @@ exports.saveUser = function(userData) {
             })
             .catch(err => {
                 console.log("Error saving user: " + err);
+                reject(err);
+            })
+    })
+}
+
+exports.getUsersByIds = function(userIds) {
+    return new Promise(function(resolve, reject) {
+        User.find({_id : {$in: userIds}})
+            .then(users => {
+                resolve(users);
+            })
+            .catch(err => {
                 reject(err);
             })
     })

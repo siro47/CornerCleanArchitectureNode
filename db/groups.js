@@ -33,3 +33,16 @@ exports.saveGroup = function(groupData) {
             })
     })
 }
+
+exports.getGroup = function (groupId) {
+    return new Promise(function(resolve, reject) {
+        Group.findOne({_id: groupId})
+            .then(group => {
+                resolve(group);
+            })
+            .catch(err => {
+                console.log("Error retrieving groups: " + err);
+                reject(err);
+            })
+    })
+}
