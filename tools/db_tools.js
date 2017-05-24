@@ -27,12 +27,3 @@ exports.DBConnectMongoose = function() {
             });
     });
 };
-
-exports.getDBConexion = function () {
-    if (db) {
-        return db;
-    }
-
-    console.log('There is no mongo connection');
-    return null;
-}
