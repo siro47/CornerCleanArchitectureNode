@@ -1,21 +1,12 @@
 /**
  * Created by siroramirez on 23/05/17.
  */
-var usersDB = require('../db/users');
+var usersDomain = require('../domain/users');
 
 exports.createUser = function (req, res, next) {
     var userData = req.body;
 
-    if (!userData.surname ||
-        !userData.lastname ||
-        !userData.dni) {
-        res.status(422).send('Missing fields');
-        return;
-    }
-
-    userData.completeName = userData.surname + userData.lastname;
-
-    usersDB.saveUser(userData)
+    usersDomain.createUser(userData)
         .then(user => {
             res.send(user)
         })

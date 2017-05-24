@@ -1,14 +1,12 @@
 /**
  * Created by siroramirez on 23/05/17.
  */
-var groupsDB = require('../db/groups');
+var groupsDomain = require('../domain/groups');
 
 exports.createGroup = function (req, res, next) {
     var groupData = req.body;
 
-    // Create a default user for the group and assign to it??
-
-    groupsDB.saveGroup(groupData)
+    groupsDomain.createGroup(groupData)
         .then(group => {
             res.send(group)
         })
