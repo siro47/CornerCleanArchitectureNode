@@ -11,7 +11,8 @@ var db = db_tools.getDBConexion();
 // Create a Mongoose schema
 var GroupSchema = new mongoose.Schema({
     name: String,
-    description: String
+    description: String,
+    users: [mongoose.Schema.Types.ObjectId]
 });
 
 // Register the schema

@@ -19,6 +19,7 @@ exports.createGroup = function (groupData) {
 
         usersDomain.createUser(defaultUser)
             .then(user => {
+                groupData.users = [user._id];
                 groupsDB.saveGroup(groupData)
                     .then(group => {
                         resolve(group);
