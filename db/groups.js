@@ -6,7 +6,10 @@ var db_tools = require('../tools/db_tools');
 var mongoose = require('mongoose');
 
 // database connect
-var db = db_tools.DBConnectMongoose();
+var db = db_tools.DBConnectMongoose()
+    .catch(err => {
+        console.log(err)
+    });
 
 // Create a Mongoose schema
 var GroupSchema = new mongoose.Schema({

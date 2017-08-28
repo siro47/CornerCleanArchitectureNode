@@ -1,0 +1,19 @@
+{
+  "name": "node_clean_architecture",
+  "version": "1.0.0",
+  "main": "server/server.js",
+  "scripts": {
+    "pretest": "jshint ."
+  },
+  "dependencies": {
+    "body-parser": "1.17.2",
+    "express": "^4.15.4",
+    "graphql": "^0.11.1",
+    "mongoose": "^4.11.9"
+  },
+  "repository": {
+    "type": "Git",
+    "url": "https://github.com/siro47/CornerCleanArchitectureNode.git"
+  },
+  "description": "Example for defining a clean architecture in Node JS"
+}
