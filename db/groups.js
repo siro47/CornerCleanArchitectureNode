@@ -22,4 +22,4 @@ var Group = mongoose.model('group', GroupSchema);
 exports.Group = Group;
 
 exports.saveGroup = async groupData => await new Group(groupData).save();
-exports.getGroup = async groupId => await Group.find({_id: groupId})
+exports.getGroup = async groupId => await Group.findOne({_id: groupId})
