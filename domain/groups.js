@@ -5,53 +5,21 @@ var usersDomain = require('./users');
 var groupsDB = require('../db/groups');
 var usersDB = require('../db/users');
 
-exports.getGroup = function (groupId) {
-    return new Promise(function(resolve, reject) {
-        groupsDB.getGroup(groupId)
-            .then(group => {
-                resolve(group);
-            })
-            .catch(err => {
-                reject(err);
-            })
-    });
-}
+exports.getGroup = async groupId => await groupsDB.getGroup(groupId);
+exports.getUsers = async group => await usersDB.getUsersByIds(group.users);
 
-exports.getUsers = function (group) {
-    return new Promise(function(resolve, reject) {
-        usersDB.getUsersByIds(group.users)
-            .then(users => {
-                resolve(users);
-            })
-            .catch(err => {
-                reject(err);
-            })
-    });
-}
+exports.createGroup = async groupData => {
+    if (!groupData.name || !groupData.description) {
+        return;
+    }
+    const defaultUser = {
+        "surname": "default" + groupData.name,
+        "lastname": "default",
+        "dni": "default" + groupData.name
+    }
 
-exports.createGroup = function (groupData) {
-    return new Promise(function(resolve, reject) {
-        if (!groupData.name ||
-            !groupData.description) {
-            reject('Missing fields');
-        }
+    let user = await usersDomain.createUser(defaultUser);
 
-        var defaultUser = {
-            "surname": "default" + groupData.name,
-            "lastname": "default",
-            "dni": "default" + groupData.name
-        }
-
-        usersDomain.createUser(defaultUser)
-            .then(user => {
-                groupData.users = [user._id];
-                groupsDB.saveGroup(groupData)
-                    .then(group => {
-                        resolve(group);
-                    })
-            })
-            .catch(err => {
-                reject(err);
-            })
-    });
+    groupData.users = [user._id];
+    return await groupsDB.saveGroup(groupData);
 }

@@ -7,9 +7,7 @@ var mongoose = require('mongoose');
 
 // database connect
 var db = db_tools.DBConnectMongoose()
-    .catch(err => {
-        console.log(err)
-    });
+    .catch(err => console.log(err));
 
 // Create a Mongoose schema
 var GroupSchema = new mongoose.Schema({
@@ -22,30 +20,6 @@ var GroupSchema = new mongoose.Schema({
 var Group = mongoose.model('group', GroupSchema);
 
 exports.Group = Group;
-exports.saveGroup = function(groupData) {
-    var group = new Group(groupData);
-    return new Promise(function(resolve, reject) {
-        group.save()
-            .then(group => {
-                console.log("Group saved!");
-                resolve(group);
-            })
-            .catch(err => {
-                console.log("Error saving group: " + err);
-                reject(err);
-            })
-    })
-}
 
-exports.getGroup = function (groupId) {
-    return new Promise(function(resolve, reject) {
-        Group.findOne({_id: groupId})
-            .then(group => {
-                resolve(group);
-            })
-            .catch(err => {
-                console.log("Error retrieving groups: " + err);
-                reject(err);
-            })
-    })
-}
+exports.saveGroup = async groupData => await new Group(groupData).save();
+exports.getGroup = async groupId => await Group.find({_id: groupId})

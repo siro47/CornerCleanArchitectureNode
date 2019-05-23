@@ -3,14 +3,13 @@
  */
 var usersDomain = require('../domain/users');
 
-exports.createUser = function (req, res, next) {
+exports.createUser = async (req, res, next) => {
     var userData = req.body;
 
-    usersDomain.createUser(userData)
-        .then(user => {
-            res.send(user)
-        })
-        .catch(err => {
-            res.status(400).send(err);
-        })
+    try {
+        var user = await usersDomain.createUser(userData);
+        res.send(user);
+    } catch (err) {
+        res.status(400).send(err);
+    }
 }

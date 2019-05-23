@@ -7,9 +7,7 @@ var mongoose = require('mongoose');
 
 // database connect
 var db = db_tools.DBConnectMongoose()
-    .catch(err => {
-        console.log(err)
-    });
+    .catch(err => console.log(err));
 
 // Create a Mongoose schema
 var UserSchema = new mongoose.Schema({
@@ -23,29 +21,6 @@ var UserSchema = new mongoose.Schema({
 var User = mongoose.model('user', UserSchema);
 
 exports.User = User;
-exports.saveUser = function(userData) {
-    var user = new User(userData);
-    return new Promise(function(resolve, reject) {
-        user.save()
-            .then(user => {
-                console.log("User saved!");
-                resolve(user);
-            })
-            .catch(err => {
-                console.log("Error saving user: " + err);
-                reject(err);
-            })
-    })
-}
 
-exports.getUsersByIds = function(userIds) {
-    return new Promise(function(resolve, reject) {
-        User.find({_id : {$in: userIds}})
-            .then(users => {
-                resolve(users);
-            })
-            .catch(err => {
-                reject(err);
-            })
-    })
-}
+exports.saveUser = async userData => await new User(userData).save();
+exports.getUsersByIds = async userIds => await User.find({_id : {$in: userIds}});

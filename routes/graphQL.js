@@ -63,8 +63,10 @@ exports.getQuery = function (req, res, next) {
         }
       `;
 
-    graphql.graphql(apiSchema, query)
-        .then(result => {
-            res.send(result);
-        })
+    try {
+        let result = graphql.graphql(apiSchema, query);
+        res.send(result);
+    } catch (err) {
+        res.status(400).send(err);
+    }
 }

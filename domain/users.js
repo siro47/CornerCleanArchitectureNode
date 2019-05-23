@@ -3,23 +3,12 @@
  */
 var usersDB = require('../db/users');
 
-exports.createUser = function(userData) {
-    return new Promise(function(resolve, reject) {
-        if (!userData.surname ||
-            !userData.lastname ||
-            !userData.dni) {
-            reject('Missing fields');
-            return;
-        }
-        
-        userData.completename = userData.surname + userData.lastname;
+exports.createUser = async userData => {
+    if (!userData.surname || !userData.lastname || !userData.dni) {
+        return;
+    }
 
-        usersDB.saveUser(userData)
-            .then(user => {
-                resolve(user);
-            })
-            .catch(err => {
-                reject(err);
-            })
-    });
+    userData.completename = userData.surname + userData.lastname;
+
+    return await usersDB.saveUser(userData)
 };
